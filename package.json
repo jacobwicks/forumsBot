@@ -4,12 +4,14 @@
     "description": "The Something Awful Forums Bot with an Express API Interface for the SA Bot Control Panel",
     "main": "server.ts",
     "scripts": {
+        "bot": "concurrently \"npm run server\" \"npm run controlPanel\"",
+        "controlPanel": "npm start --prefix controlPanel",
         "fullInstall": "npm install && cd controlPanel && npm install",
+        "fullSetup": "npm run fullInstall && npm run setup && npm run bot",
+        "setup": "cd setup && ts-node index",
         "test": "echo \"Error: no test specified\" && exit 1",
         "tsc": "tsc",
-        "server": "ts-node-dev server.ts",
-        "controlPanel": "npm start --prefix controlPanel",
-        "dev": "concurrently \"npm run server\" \"npm run controlPanel\""
+        "server": "ts-node-dev server.ts"
     },
     "repository": {
         "type": "git",

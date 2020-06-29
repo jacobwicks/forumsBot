@@ -12,6 +12,8 @@ export const getConfig = async (): Promise<ConfigJSON | undefined> => {
         return JSON.parse(config, reviver) as ConfigJSON;
     } catch (err) {
         console.log('couldnt get config- that is BAD!');
+        console.log(err);
+        process.exit(0);
         return undefined;
     }
 };
@@ -138,7 +140,7 @@ export const changeKeyInConfig = async ({
 
             //can only write strings
             //null, 2 formats the string human readable
-            const stringConfig = JSON.stringify(config, null, 2);
+            const stringConfig = JSON.stringify(config, replacer, 2);
 
             //wait for writing to config to complete
             await fs.writeFile(configPath, stringConfig, 'utf8');

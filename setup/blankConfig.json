@@ -1,0 +1,32 @@
+{
+    "actions": {},
+    "albums": {},
+    "apis": {
+        "catAPI": null,
+        "deepAi": null,
+        "imgur": {
+            "accessToken": null,
+            "clientId": null,
+            "clientSecret": null
+        },
+        "twitter": {
+            "bearerToken": null,
+            "consumerKey": null,
+            "consumerSecret": null
+        }
+    },
+    "cookies": {},
+    "imageQueue": [],
+    "password": null,
+    "settings": {
+        "botName": null,
+        "creds": {
+            "username": null,
+            "password": null
+        },
+        "interval": 5,
+        "on": false,
+        "running": false
+    },
+    "threads": {}
+}

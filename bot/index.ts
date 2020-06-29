@@ -1,5 +1,5 @@
 import log from './services/log';
-import { setRunning } from '../services/Config';
+import { setRunning, getBotName } from '../services/Config';
 import { sendLogEvent } from '../services/Events';
 import {
     getTimeLeft,
@@ -41,6 +41,11 @@ const expose: BotExpose = {
 
 export const bot = async (threadId?: number) => {
     try {
+        const botName = await getBotName();
+        if (!botName) {
+            sendLogEvent('No botName found, exiting');
+            return;
+        }
         //login loads the stored cookies
         //checks if they work,
         //and gets new cookies if necessary
