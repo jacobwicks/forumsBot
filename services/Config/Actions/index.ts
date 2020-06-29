@@ -26,6 +26,7 @@ export const addActionIfNotExist = async ({
     };
 
     if (!exists) {
+        console.log(`action ${key} does not exist, would write`, value);
         await writeToConfig({
             allowCreateKey: true,
             configKeys: ['actions', key],

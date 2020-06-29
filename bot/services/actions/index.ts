@@ -135,7 +135,7 @@ export const updateActionsInConfig = async () => {
 
     //each action exports its name
     for await (const { key, triggers } of exports) {
-        if (key) {
+        if (key && triggers) {
             //if action not in config, add it
             await addActionIfNotExist({ key, triggers });
         }

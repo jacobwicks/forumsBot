@@ -3,7 +3,7 @@ import { ConfigJSON } from '../../types';
 import { replacer, reviver } from '../JSONStringifyRegExp';
 import * as path from 'path';
 
-const appRoot = path.resolve(__dirname, '../');
+const appRoot = path.resolve(__dirname, '../../');
 
 const configPath = `${appRoot}/config.json`;
 
