@@ -12,7 +12,7 @@ interface PostFromAlbum extends RespondToPostProps {
     album: string;
 }
 
-const triggers = [/^\badd\b/gi];
+const triggers = [/^\badd\b/i];
 
 const addImageToAlbum = async ({
     instruction,
