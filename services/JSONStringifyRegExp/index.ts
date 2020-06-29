@@ -11,7 +11,7 @@ export const reviver = (key: string, value: any) => {
             var m = value.split('__REGEXP ')[1].match(/\/(.*)\/(.*)?/);
             return new RegExp(m[1], m[2] || '');
         } catch (err) {
-            return 'failedRegex';
+            return value;
         }
     } else return value;
 };

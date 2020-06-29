@@ -6,7 +6,7 @@
     "scripts": {
         "bot": "concurrently \"npm run server\" \"npm run controlPanel\"",
         "controlPanel": "npm start --prefix controlPanel",
-        "fullInstall": "npm install && cd controlPanel && npm install",
+        "fullInstall": "npm install && git submodule init && git submodule update && cd controlPanel && npm install",
         "fullSetup": "npm run fullInstall && npm run setup && npm run bot",
         "setup": "cd setup && ts-node index",
         "test": "echo \"Error: no test specified\" && exit 1",
