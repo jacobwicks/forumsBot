@@ -1,10 +1,11 @@
 import { promises as fs } from 'fs';
 import { ConfigJSON } from '../../types';
 import { replacer, reviver } from '../JSONStringifyRegExp';
-//fs.promises reads relative from the directory where the command is run
-//so, the base directory if you're running server.ts
-const configPath = './config.json';
-//const configPath = '../config.json';
+import * as path from 'path';
+
+const appRoot = path.resolve(__dirname, '../');
+
+const configPath = `${appRoot}/config.json`;
 
 export const getConfig = async (): Promise<ConfigJSON | undefined> => {
     const config = await fs.readFile(configPath, 'utf8');
@@ -76,6 +77,8 @@ export const writeToConfig = async ({
             //null, 2 formats the string human readable
             const stringConfig = JSON.stringify(config, replacer, 2);
 
+            JSON.parse(stringConfig, reviver);
+
             //wait for writing to config to complete
             await fs.writeFile(configPath, stringConfig, 'utf8');
 
@@ -142,6 +145,7 @@ export const changeKeyInConfig = async ({
             //null, 2 formats the string human readable
             const stringConfig = JSON.stringify(config, replacer, 2);
 
+            JSON.parse(stringConfig, reviver);
             //wait for writing to config to complete
             await fs.writeFile(configPath, stringConfig, 'utf8');
 
