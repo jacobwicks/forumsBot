@@ -4,6 +4,8 @@ const resetInterval = () => undefined;
 
 const settingsConfigKeys = ['settings'];
 
+const credsConfigKeys = [...settingsConfigKeys, 'creds'];
+
 export const getSettings = async () => {
     const config = await getConfig();
     return config?.settings;
@@ -17,6 +19,11 @@ export const getBotName = async () => {
 export const getCreds = async () => {
     const settings = await getSettings();
     return settings?.creds;
+};
+
+export const getCredsUserId = async () => {
+    const creds = await getCreds();
+    return creds?.userId;
 };
 
 export const getCredsUsername = async () => {
@@ -53,6 +60,15 @@ export const setBotInterval = async (interval: number) => {
         return intervalSet;
     }
 };
+
+export const setCredsUserId = async (value: number) => {
+    const configKeys = [...credsConfigKeys, 'userId'];
+    return await writeToConfig({
+        configKeys,
+        value,
+    });
+};
+
 export const setOn = async (on: boolean) => {
     const configKeys = [...settingsConfigKeys, 'on'];
     return await writeToConfig({ configKeys, value: on });

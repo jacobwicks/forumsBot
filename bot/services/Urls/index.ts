@@ -1,5 +1,7 @@
 export const baseUrl = 'https://forums.somethingawful.com';
 
+export const accountPhp = `${baseUrl}/account.php`;
+
 export const bookmarkPage = `${baseUrl}/bookmarkthreads.php`;
 
 export const controlPanel = `${baseUrl}/usercp.php`;
@@ -61,3 +63,6 @@ export const threadLastRead = (threadId: number) =>
 
 export const userProfile = (profile: number) =>
     `${baseUrl}/member.php?action=getinfo&userid=${profile}`;
+
+export const threadLastPost = (threadId: number) =>
+    `${baseUrl}/showthread.php?threadid=${threadId}&goto=lastpost`;

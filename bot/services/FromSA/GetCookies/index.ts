@@ -9,6 +9,8 @@ import {
     getCredsPassword,
 } from '../../../../services/Config';
 import { KeyString } from '../../../../types';
+import { accountPhp } from '../../Urls';
+import cheerioLoad from '../CheerioLoad';
 
 const options = {
     headers: {
@@ -33,7 +35,7 @@ export const testCreds = async (): Promise<boolean> => {
     const username = await getCredsUsername();
     const password = await getCredsPassword();
 
-    const url = 'https://forums.somethingawful.com/account.php';
+    const url = accountPhp;
     const body = `action=login&username=${username}&password=${password}&next=%2F`;
 
     //the first response we set redirect to manual
@@ -49,11 +51,24 @@ export const testCreds = async (): Promise<boolean> => {
     return response.status === 200;
 };
 
-const getCookies = async (asObject?: boolean): Promise<KeyString | string> => {
+const getCookies = async ({
+    asObject,
+    getUserId,
+}: {
+    asObject?: boolean;
+    getUserId?: boolean;
+}): Promise<
+    | KeyString
+    | string
+    | {
+          cookies: KeyString | string;
+          userId: number;
+      }
+> => {
     const username = await getCredsUsername();
     const password = await getCredsPassword();
 
-    const url = 'https://forums.somethingawful.com/account.php';
+    const url = accountPhp;
     const body = `action=login&username=${username}&password=${password}&next=%2F`;
 
     //the first response we set redirect to manual
@@ -66,14 +81,39 @@ const getCookies = async (asObject?: boolean): Promise<KeyString | string> => {
     //get the cookies from the first response
     const responseCookies = getCookiesFromResponse(response) as KeyString;
 
-    //now fetch from the account.php
-    const response2 = await fetch(url, { ...options, body });
-    //get the rest of the login cookies
-    const response2Cookies = getCookiesFromResponse(response2) as KeyString;
+    if (!getUserId) {
+        //now fetch from the account.php
+        const response2 = await fetch(url, { ...options, body });
+        //get the rest of the login cookies
+        const response2Cookies = getCookiesFromResponse(response2) as KeyString;
 
-    const cookieObject = { ...responseCookies, ...response2Cookies };
+        const cookieObject = { ...responseCookies, ...response2Cookies };
 
-    return asObject ? cookieObject : convertObjectToString(cookieObject);
+        return asObject ? cookieObject : convertObjectToString(cookieObject);
+    } else {
+        console.log('GetCookies received request to get userId');
+        const response2 = await fetch(url, { ...options, body });
+        const response2Text = await response2.text();
+
+        console.log('response2Text.length', response2Text.length);
+
+        const response2Cookies = getCookiesFromResponse(response2) as KeyString;
+        const cookieObject = { ...responseCookies, ...response2Cookies };
+
+        const $ = cheerioLoad(response2Text);
+
+        const mainbodytextsmall = $('.mainbodytextsmall');
+        const firstLink = $(mainbodytextsmall).find('a').first().attr('href');
+        const userIdString = firstLink?.split('=').pop();
+        const userId = Number(userIdString);
+
+        return {
+            cookies: asObject
+                ? cookieObject
+                : convertObjectToString(cookieObject),
+            userId,
+        };
+    }
 };
 
 export default getCookies;

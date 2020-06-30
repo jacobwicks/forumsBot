@@ -21,6 +21,7 @@
     "settings": {
         "botName": null,
         "creds": {
+            "userId": null,
             "username": null,
             "password": null
         },

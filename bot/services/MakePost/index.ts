@@ -3,7 +3,7 @@ import cheerioLoad from '../FromSA/CheerioLoad';
 import getHeaders from '../FromSA/GetHeaders';
 import getSearchablePage from '../FromSA/GetSearchablePage';
 import { getCredsUsername } from '../../../services/Config';
-import { getBody } from './services/index';
+import { getBody, getJustPosted } from './services/index';
 import getReplyCookies from '../FromSA/GetReplyCookies';
 import { newReply, showPost } from '../Urls';
 import { sendLogEvent } from '../../../services/Events';
@@ -42,7 +42,6 @@ const makePost = async ({ content, threadId, postId }: MakePostProps) => {
     //add the quoted post into the postContent string
     const postContent = postId ? `${quote}${content}` : content;
 
-    const username = await getCredsUsername();
     const headers = getHeaders(cookie);
 
     const url = newReply;
@@ -85,32 +84,10 @@ const makePost = async ({ content, threadId, postId }: MakePostProps) => {
     const posted = $.exists("div:contains('YOU JUST MADE A POST!')");
 
     if (posted) {
-        //https://forums.somethingawful.com/showthread.php?threadid=3925033&goto=lastpost
-        const url = `https://forums.somethingawful.com/showthread.php?threadid=${threadId}&goto=lastpost`;
-
-        const $ = await getSearchablePage({
-            cookie,
-            url,
-        });
-
-        const authors = $('.author').filter(function () {
-            //@ts-ignore
-            return $(this).text().toLowerCase() === username.toLowerCase();
-        });
-
-        const author = authors[authors.length - 1];
-
-        const post = $(author).closest('.post');
-
-        const postId = Number(
-            $(post).find('[title|="Link to this post"]').attr('href')?.slice(5)
-        );
-
-        const link = !isNaN(postId) ? showPost(postId) : postId;
+        const post = await getJustPosted({ cookie, threadId });
 
         sendLogEvent({
-            text: 'Made post',
-            link,
+            post,
         });
     } else {
         console.log(`didn't post!`, responseHTML);

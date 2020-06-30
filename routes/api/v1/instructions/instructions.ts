@@ -2,6 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import { getActionsInstructions } from '../../../../bot/services/actions';
 import { getAlbums } from '../../../../services/Config';
 import getMarkDown from '../../../../markdown';
+import getBotUserInfo from '../../../../bot/services/FromSA/GetBotUserInfo';
 
 //import authenticate from '../../../../services/Authenticate';
 
@@ -30,7 +31,9 @@ export const thisRoute = async (
 
         const general = await getMarkDown(['general', 'generalInstructions']);
 
-        res.send({ albums, actions, general });
+        const bot = await getBotUserInfo();
+
+        res.send({ albums, actions, bot, general });
     } catch (error) {
         res.status(500);
         next(error);

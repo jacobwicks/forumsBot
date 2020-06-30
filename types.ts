@@ -76,6 +76,7 @@ interface ConfigJSON {
 }
 
 interface Creds {
+    userId: number;
     username: string;
     password: string;
 }
