@@ -138,6 +138,8 @@ export const updateActionsInConfig = async () => {
         if (key && triggers) {
             //if action not in config, add it
             await addActionIfNotExist({ key, triggers });
+        } else {
+            return Promise.resolve(undefined);
         }
     }
 };
