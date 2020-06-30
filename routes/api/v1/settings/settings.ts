@@ -13,7 +13,8 @@ export const thisRoute = async (
         const settings = await getSettings();
         settings && delete settings.creds;
 
-        const cookiesExist = !!(await getCookies());
+        const cookies = await getCookies();
+        const cookiesExist = !!cookies && !!Object.keys(cookies);
 
         settings &&
             (settings.cookies = {

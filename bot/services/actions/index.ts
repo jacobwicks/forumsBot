@@ -7,7 +7,6 @@ import {
     getAction,
 } from '../../../services/Config';
 import { replacer } from '../../../services/JSONStringifyRegExp';
-import { acceptImage } from '../../../services/Images';
 import { getActionMarkdown, getActionExampleMarkdown } from '../../../markdown';
 
 const getKey = (filename: string) => filename.split('/')[0];
