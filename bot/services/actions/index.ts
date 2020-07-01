@@ -89,7 +89,7 @@ export const getDisplayActions = async (asString?: boolean) => {
     const actionsConfig = await getActions();
 
     const actions = exports.reduce(
-        (acc, { instructions, key, name, triggers }) => {
+        (acc, { albums, instructions, key, name, triggers }) => {
             if (key && name) {
                 const thisAction = actionsConfig?.[key];
                 const active = !!thisAction?.active;
@@ -98,6 +98,7 @@ export const getDisplayActions = async (asString?: boolean) => {
                     : triggers;
 
                 acc[key] = {
+                    albums,
                     active,
                     instructions,
                     name,
@@ -109,6 +110,7 @@ export const getDisplayActions = async (asString?: boolean) => {
         <
             {
                 [key: string]: {
+                    albums: boolean;
                     active: boolean;
                     instructions?: string;
                     name: string;
@@ -377,7 +379,8 @@ export const getActionsInstructions = async (asString?: boolean) => {
     const actionsInstructions = actions
         .filter(({ active }) => active)
         .filter(({ name }) => name)
-        .map(({ key, name, triggers }) => ({
+        .map(({ albums, key, name, triggers }) => ({
+            albums,
             example: allExamples.find((el) => el.key === key)?.example,
             instructions: allInstructions.find((el) => el.key === key)
                 ?.instructions,
