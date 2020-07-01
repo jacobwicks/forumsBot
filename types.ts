@@ -106,6 +106,7 @@ export interface KeyString {
 
 interface ReviewImage {
     album: string;
+    hash: number;
     image: string;
     submittedAt: string;
     submittedBy: SAUser;

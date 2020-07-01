@@ -15,11 +15,13 @@ export const thisRoute = async (
         //timestamp of image submission uniquely identifies
         //reviewImage object contains album string
         //so accepted image will be put in correct album
-        const { submittedAt } = req.body;
+        const { hash } = req.body;
+
+        console.log('adding image hash', hash);
 
         //acceptImage attempts to upload image to album
         //and removes it from the imageQueue in config
-        const uploadedImageUrl = await acceptImage(submittedAt);
+        const uploadedImageUrl = await acceptImage(hash);
 
         uploadedImageUrl ? res.send({ uploadedImageUrl }) : res.sendStatus(500);
     } catch (error) {

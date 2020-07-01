@@ -20,14 +20,14 @@ server
     .listen(port);
 
 const checkBotStart = async () => {
-    setRunning(false);
+    await setRunning(false);
     await updateActionsInConfig();
     //get the 'on' value from bot settings in config
     const on = await getOn();
 
     if (on) {
         //run the bot every interval
-        runAtInterval();
+        await runAtInterval();
     }
 };
 

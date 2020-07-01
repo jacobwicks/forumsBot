@@ -142,7 +142,7 @@ export const updateActionsInConfig = async () => {
             //if action not in config, add it
             await addActionIfNotExist({ key, triggers });
         } else {
-            return Promise.resolve(undefined);
+            return Promise.resolve();
         }
     }
 };
@@ -265,9 +265,11 @@ const getHandleInstructions = async () => {
         threadId: number;
     }) {
         //async await works best with for... of loops vs .forEach
-        for await (const post of instructions) {
+        for await (const [index, post] of instructions.entries()) {
             let validInstruction = true;
-            let noWait = false;
+            //don't wait for the last instruction
+            let noWait = index + 1 === instructions.length;
+
             //the args contain the whole post spread out, as well as the post object
             //most actions will only grab one or two properties
             //but some want the whole post- like add image to imageQueue
@@ -335,11 +337,15 @@ const getHandleInstructions = async () => {
                             ? 'valid instruction but no wait'
                             : `invalid instruction, not waiting`
                     );
-                    sendLogEvent(
-                        noWait
-                            ? 'Instruction does not require wait'
-                            : `Invalid instruction. Not waiting.`
-                    );
+                    noWait
+                        ? sendLogEvent({
+                              text: 'Instruction does not require wait',
+                              instruction,
+                          })
+                        : sendLogEvent({
+                              text: 'Invalid instruction. Not waiting.',
+                              instruction,
+                          });
                 }
             }
         }

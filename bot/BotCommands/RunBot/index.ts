@@ -36,13 +36,13 @@ const rerunBot = async () => {
 };
 
 export const runBot = async (rerun?: boolean) => {
-    setRunning(true);
+    await setRunning(true);
     sendLogEvent({ setting: { running: true } });
 
     await bot();
     rerun && rerunBot();
 
-    setRunning(false);
+    await setRunning(false);
 
     sendLogEvent({ setting: { running: false } });
 };

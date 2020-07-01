@@ -6,20 +6,30 @@ import {
 import { ReviewImage } from '../../../types';
 import { addImageToImgurAlbum } from '../index';
 
-export const acceptImage = async (submittedAt: string) => {
+export const acceptImage = async (hash: number) => {
+    console.log('accept image hash', hash);
+
     const imageQueue = await getImageQueue();
 
-    if (!imageQueue) return false;
+    if (!imageQueue) {
+        console.log('no image queue');
+        return false;
+    }
 
     const thisImage: ReviewImage | undefined = imageQueue.find(
-        (img: ReviewImage) => img.submittedAt === submittedAt
+        (img: ReviewImage) => img.hash === hash
     );
 
-    if (!thisImage) return false;
-
+    if (!thisImage) {
+        console.log('no image found', hash);
+        return false;
+    }
     const album = await getAlbumCaseInsensitive(thisImage.album);
 
-    if (!album) return false;
+    if (!album) {
+        console.log('no album');
+        return false;
+    }
 
     const uploadedUrl = await addImageToImgurAlbum({
         imageUrl: thisImage.image,
@@ -28,16 +38,22 @@ export const acceptImage = async (submittedAt: string) => {
 
     if (uploadedUrl) console.log(`accept image successfully uploaded to imgur`);
 
-    if (!uploadedUrl) return false;
+    if (!uploadedUrl) {
+        console.log('not uploaded to imgur', hash);
+        return false;
+    }
 
     const newQueue: ReviewImage[] = imageQueue?.filter(
-        (img: ReviewImage) => img.submittedAt !== submittedAt
+        (img: ReviewImage) => img.hash !== hash
     );
 
     const imageRemovedFromQueue = newQueue
         ? await setImageQueue(newQueue)
         : false;
 
-    if (!imageRemovedFromQueue) return false;
+    if (!imageRemovedFromQueue) {
+        console.log('image not removed from queue', hash);
+        return false;
+    }
     return uploadedUrl;
 };

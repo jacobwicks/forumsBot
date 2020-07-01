@@ -14,7 +14,7 @@ export const getConfig = async (): Promise<ConfigJSON | undefined> => {
     } catch (err) {
         console.log('couldnt get config- that is BAD!');
         console.log(err);
-        process.exit(0);
+        //process.exit(0);
         return undefined;
     }
 };

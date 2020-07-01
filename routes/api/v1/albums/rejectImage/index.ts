@@ -13,10 +13,10 @@ export const thisRoute = async (
 ) => {
     try {
         //timestamp of image submission uniquely identifies image
-        const { submittedAt } = req.body;
+        const { hash } = req.body;
 
         //reject attempts to remove image from queue
-        const result = await rejectImage(submittedAt);
+        const result = await rejectImage(hash);
 
         result ? res.sendStatus(200) : res.sendStatus(500);
     } catch (error) {

@@ -42,8 +42,13 @@ export const addImageToImgurAlbum = async ({
             body: formData,
         });
 
+        console.log('imgur upload status', response.status);
+
         //response.json === { data { link: string }, success, status}
         const json = await response.json();
+        if (response.status !== 200) {
+            console.log(json);
+        }
         //link to uploaded img
         const link: string | undefined = json?.data?.link;
 

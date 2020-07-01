@@ -37,7 +37,7 @@ const addImageToAlbum = async ({
 
     const album = instruction.trim();
 
-    addImageToImageQueue({
+    await addImageToImageQueue({
         album,
         post,
     });

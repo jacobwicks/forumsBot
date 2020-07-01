@@ -19,8 +19,10 @@ export const addImageToImageQueue = async ({
     if (!exists) return;
 
     for await (const image of images) {
+        const hash = Date.now();
         const reviewImage = {
             album,
+            hash,
             image,
             submittedAt: date.toString(),
             submittedBy: author,

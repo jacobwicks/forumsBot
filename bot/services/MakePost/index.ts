@@ -42,6 +42,11 @@ const makePost = async ({ content, threadId, postId }: MakePostProps) => {
     //add the quoted post into the postContent string
     const postContent = postId ? `${quote}${content}` : content;
 
+    const postContentWithInstructions = `${postContent}
+    ________________________________
+    I'm a bot making automated posts!
+    [url=jacobwicks.github.io/forumsBotInstructions/]How to use this bot[/url]`;
+
     const headers = getHeaders(cookie);
 
     const url = newReply;
@@ -55,7 +60,11 @@ const makePost = async ({ content, threadId, postId }: MakePostProps) => {
         return;
     }
 
-    const body = getBody({ content: postContent, form_cookie, threadId });
+    const body = getBody({
+        content: postContentWithInstructions,
+        form_cookie,
+        threadId,
+    });
     console.log(`post content is`, postContent);
 
     const options = {
