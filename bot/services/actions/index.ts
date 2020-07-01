@@ -10,31 +10,31 @@ import { replacer } from '../../../services/JSONStringifyRegExp';
 import { getActionMarkdown, getActionExampleMarkdown } from '../../../markdown';
 
 const getKey = (filename: string) => filename.split('/')[0];
-//Action folder
-//exports
-/*
-action file: {
-    action: (...args: any) => Promise<void>
-triggers: (string | RegExp)[];
-}
-
-example? file: example invocation markdown. 
-
-//what type of action it is
-type?: {
-    post: boolean,
-    pm: boolean
-} 
-
-instructions? file: Instructions markdown.
-*/
 
 interface ActionFile {
+    //the action function that will be invoked
+    //when the action is triggered
     action: (...args: any) => Promise<void>;
+
+    //the action uses albums
+    //this flag is used to render the instructions in the controlpanel
+    albums?: boolean;
+
+    //instructions from the optional markdown file in the action folder
     instructions?: string;
+
     key: string;
     name: string;
+
+    //the action does not post
+    //forums have a cooldown timer between posts
+    //this flag is used to skip the post action delay
+    //for actions that don't make a post
     noPost?: boolean;
+
+    //Triggers are either a string or a regular expression
+    //if an instructions matches one of the  triggers
+    //then the action will be invoked
     triggers: Trigger[];
 }
 
@@ -65,6 +65,7 @@ const getActionFileNames = () => {
 
 interface DisplayAction {
     active: boolean | undefined;
+    albums: boolean;
     triggers: Trigger[];
     action: (...args: any) => Promise<void>;
     instructions?: string | undefined;
@@ -80,6 +81,7 @@ export const getDisplayActions = async (asString?: boolean) => {
         const key = getKey(filename);
         return {
             ...exports,
+            albums: !!exports?.albums,
             key,
         };
     });

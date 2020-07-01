@@ -9,12 +9,12 @@ import { baseUrl, bookmarkPage } from '../../Urls';
 import { ArrayThread } from '../../../../types';
 
 const getBookmarkedThreads = async (url?: string): Promise<ArrayThread[]> => {
-    console.log(
-        `getBookmarkedThreads called ${
-            url ? 'with' : 'without'
-        } an override url`,
-        url
-    );
+    // console.log(
+    //     `getBookmarkedThreads called ${
+    //         url ? 'with' : 'without'
+    //     } an override url`,
+    //     url
+    // );
 
     const cookie = await getCookieString();
     if (!cookie) return [];
@@ -51,9 +51,9 @@ const getBookmarkedThreads = async (url?: string): Promise<ArrayThread[]> => {
                 ? Number($(thread).find('.count').text())
                 : 0;
 
-            console.log(
-                `getBookmarkedThreads sees ${unreadPosts} unread posts in ${title}`
-            );
+            // console.log(
+            //     `getBookmarkedThreads sees ${unreadPosts} unread posts in ${title}`
+            // );
 
             return {
                 title,

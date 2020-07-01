@@ -44,7 +44,7 @@ const addImageToAlbum = async ({
 };
 
 const name = 'Add Image to Album';
-
+const albums = true;
 const noPost = true;
 
-export { addImageToAlbum as action, name, noPost, triggers };
+export { addImageToAlbum as action, albums, name, noPost, triggers };

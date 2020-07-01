@@ -61,6 +61,7 @@ const processPostFromAlbumInstruction = async ({
     } else log('postFromAlbum Failed: bad album', album);
 };
 
+const albums = true;
 const name = 'Get Image From Album';
 
-export { processPostFromAlbumInstruction as action, name, triggers };
+export { processPostFromAlbumInstruction as action, albums, name, triggers };

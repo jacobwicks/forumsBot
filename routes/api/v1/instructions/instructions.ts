@@ -3,6 +3,7 @@ import { getActionsInstructions } from '../../../../bot/services/actions';
 import { getAlbums } from '../../../../services/Config';
 import getMarkDown from '../../../../markdown';
 import getBotUserInfo from '../../../../bot/services/FromSA/GetBotUserInfo';
+import { getBookmarkedThreads } from '../../../../bot';
 
 //import authenticate from '../../../../services/Authenticate';
 
@@ -33,7 +34,9 @@ export const thisRoute = async (
 
         const bot = await getBotUserInfo();
 
-        res.send({ albums, actions, bot, general });
+        const threads = await getBookmarkedThreads();
+
+        res.send({ albums, actions, bot, general, threads });
     } catch (error) {
         res.status(500);
         next(error);
