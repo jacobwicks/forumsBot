@@ -1,3 +1,6 @@
 [submodule "controlPanel"]
 	path = controlPanel
 	url = https://github.com/jacobwicks/saBotControlPanel.git
+[submodule "instructions"]
+	path = instructions
+	url = https://github.com/jacobwicks/forumsBotInstructions.git

@@ -1,9 +1,15 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import authenticate from '../../../../../services/Authenticate';
+//import authenticate from '../../../../../services/Authenticate';
 import {
     changeKeyInConfig,
     saveInstructionsToFile,
+    getAlbums,
+    getBotName,
 } from '../../../../../services/Config';
+import { getActionsInstructions } from '../../../../../bot/services/actions';
+import getMarkDown from '../../../../../markdown';
+import getBotUserInfo from '../../../../../bot/services/FromSA/GetBotUserInfo';
+import { getBookmarkedThreads } from '../../../../../bot';
 
 const routePath = '/v1/saveInstructions/';
 
@@ -14,11 +20,36 @@ export const thisRoute = async (
     next: NextFunction
 ) => {
     try {
-        const { instructions } = req.body;
+        const fullAlbums = await getAlbums();
+        const albums = fullAlbums
+            ? Object.keys(fullAlbums)
+                  .filter((album) => fullAlbums[album].status)
+                  .map((album) => ({
+                      album,
+                      description: fullAlbums[album].description,
+                  }))
+            : [];
 
-        const result = await saveInstructionsToFile({
-            instructions,
-        });
+        const actions = await getActionsInstructions();
+
+        const general = await getMarkDown(['general', 'generalInstructions']);
+
+        const bot = await getBotUserInfo();
+
+        const botName = await getBotName();
+
+        const threads = await getBookmarkedThreads();
+
+        const instructions = {
+            albums,
+            actions,
+            bot,
+            botName,
+            general,
+            threads,
+        };
+
+        const result = await saveInstructionsToFile(instructions);
 
         result ? res.sendStatus(200) : res.sendStatus(500);
     } catch (error) {
@@ -29,9 +60,9 @@ export const thisRoute = async (
 
 module.exports = {
     thisRoute,
-    router: Router({ mergeParams: true }).post(
+    router: Router({ mergeParams: true }).get(
         routePath,
-        authenticate,
+        //      authenticate,
         thisRoute
     ),
 };
