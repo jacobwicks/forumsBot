@@ -18,6 +18,7 @@ import getBookmarkedThreads, {
 import markLastRead from './services/FromSA/MarkLastRead';
 import getThreadAndRunInstructions from './services/FromSA/GetThreadAndRunInstructions';
 import { updateActionsInConfig, getDisplayActions } from './services/actions';
+import checkProbation from './services/FromSA/CheckProbation';
 
 interface BotExpose {
     botOn: NodeJS.Timeout | undefined;
@@ -52,6 +53,16 @@ export const bot = async (threadId?: number) => {
         await login();
 
         sendLogEvent('bot has logged in');
+
+        const onProbation = await checkProbation();
+
+        console.log('on probation is ', onProbation);
+
+        if (onProbation) {
+            console.log('Bot is on probation, ending run');
+            sendLogEvent('Bot is on probation, ending run.');
+            return;
+        }
 
         //gets the bookmarked threads, gets posts
         //finds instructions and runs them
