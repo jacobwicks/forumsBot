@@ -337,14 +337,14 @@ const getHandleInstructions = async () => {
                             ? 'valid instruction but no wait'
                             : `invalid instruction, not waiting`
                     );
-                    noWait
+                    noWait && validInstruction
                         ? sendLogEvent({
-                              text: 'Instruction does not require wait',
-                              instruction,
+                              text: 'Instruction does not require wait. \n',
+                              post,
                           })
                         : sendLogEvent({
-                              text: 'Invalid instruction. Not waiting.',
-                              instruction,
+                              text: 'Invalid instruction. Not waiting. \n',
+                              post,
                           });
                 }
             }

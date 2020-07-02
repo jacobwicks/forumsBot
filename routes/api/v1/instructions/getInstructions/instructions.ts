@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { getActionsInstructions } from '../../../../bot/services/actions';
-import { getAlbums } from '../../../../services/Config';
-import getMarkDown from '../../../../markdown';
-import getBotUserInfo from '../../../../bot/services/FromSA/GetBotUserInfo';
-import { getBookmarkedThreads } from '../../../../bot';
+import { getActionsInstructions } from '../../../../../bot/services/actions';
+import { getAlbums } from '../../../../../services/Config';
+import getMarkDown from '../../../../../markdown';
+import getBotUserInfo from '../../../../../bot/services/FromSA/GetBotUserInfo';
+import { getBookmarkedThreads } from '../../../../../bot';
 
 //import authenticate from '../../../../services/Authenticate';
 

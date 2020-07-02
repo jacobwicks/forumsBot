@@ -161,6 +161,7 @@ export * from './Albums';
 export * from './Apis';
 export * from './Cookies';
 export * from './ImageQueue';
+export * from './Instructions';
 export * from './Password';
 export * from './Settings';
 export * from './Threads';
