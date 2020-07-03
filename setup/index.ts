@@ -4,6 +4,7 @@ import * as path from 'path';
 import readline from 'readline';
 import { bot } from '../bot';
 import { replacer } from '../services/JSONStringifyRegExp';
+import { hashPromise } from '../services/Encrypt';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -127,7 +128,9 @@ What botName will the bot use?`;
 
     const password = await askFor('Enter a password for the control panel');
 
-    config.password = password;
+    const hashedPassword = await hashPromise(password);
+
+    config.password = hashedPassword;
 
     const stringConfig = JSON.stringify(config, replacer, 2);
 

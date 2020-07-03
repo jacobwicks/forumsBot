@@ -28,6 +28,7 @@
     },
     "homepage": "https://github.com/jacobwicks/saBotAPI#readme",
     "dependencies": {
+        "@types/bcrypt": "^3.0.0",
         "@types/body-parser": "^1.19.0",
         "@types/cheerio": "^0.22.18",
         "@types/cors": "^2.8.6",
