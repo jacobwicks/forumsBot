@@ -12,6 +12,7 @@ const server = http.createServer();
 server
     .on('request', app)
     .on('listening', function () {
+        //@ts-ignore
         const addr = this.address();
         const bind =
             typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
