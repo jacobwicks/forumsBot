@@ -1,9 +1,10 @@
 import { promises as fs } from 'fs';
 import { getBotName } from '../services/Config';
 import * as path from 'path';
+
 const appRoot = path.resolve(__dirname, '../');
 
-const baseActionKeys = ['./bot/services/actions'];
+const baseActionKeys = ['/bot/services/actions'];
 
 const getActionKeys = (action: string, fileName?: string) =>
     fileName
