@@ -8,8 +8,8 @@ const appRoot = path.resolve(__dirname, '../../');
 const configPath = `${appRoot}/config.json`;
 
 export const getConfig = async (): Promise<ConfigJSON | undefined> => {
-    const config = await fs.readFile(configPath, 'utf8');
     try {
+        const config = await fs.readFile(configPath, 'utf8');
         return JSON.parse(config, reviver) as ConfigJSON;
     } catch (err) {
         console.log('couldnt get config- that is BAD!');
