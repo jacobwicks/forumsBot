@@ -2,7 +2,6 @@ import { promises as fs } from 'fs';
 import { ConfigJSON } from '../types';
 import * as path from 'path';
 import readline from 'readline';
-import { bot } from '../bot';
 import { replacer } from '../services/JSONStringifyRegExp';
 import { hashPromise } from '../services/Encrypt';
 
@@ -11,17 +10,13 @@ const rl = readline.createInterface({
     output: process.stdout,
 });
 
-// export const askFor = (question: string): Promise<string> =>
-//     new Promise((resolve, reject) => {
-//         rl.question(`${question} `, resolve);
-//     });
-
 export const askFor = (question: string): Promise<string> =>
     new Promise((resolve, reject) => {
         rl.question(`${question} `, (answer) => {
             resolve(answer.toString().trim());
         });
     });
+
 const appRoot = path.resolve(__dirname, '../');
 
 const checkForExistingConfig = async (): Promise<ConfigJSON | boolean> => {
@@ -32,7 +27,6 @@ const checkForExistingConfig = async (): Promise<ConfigJSON | boolean> => {
     } catch (err) {
         return false;
     }
-    return false;
 };
 
 const wantModify = async (shortPrompt?: boolean): Promise<boolean> => {

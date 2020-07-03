@@ -12,8 +12,8 @@ export const getConfig = async (): Promise<ConfigJSON | undefined> => {
         const config = await fs.readFile(configPath, 'utf8');
         return JSON.parse(config, reviver) as ConfigJSON;
     } catch (err) {
-        console.log('couldnt get config- that is BAD!');
-        console.log(err);
+        //console.log('couldnt get config- that is BAD!');
+        //console.log(err);
         //process.exit(0);
         return undefined;
     }
