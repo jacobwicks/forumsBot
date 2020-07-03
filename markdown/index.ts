@@ -1,5 +1,7 @@
 import { promises as fs } from 'fs';
 import { getBotName } from '../services/Config';
+import * as path from 'path';
+const appRoot = path.resolve(__dirname, '../');
 
 const baseActionKeys = ['./bot/services/actions'];
 
@@ -61,7 +63,7 @@ const getMarkDown = async (
                 index < keys.length - 1
                     ? (path += `${key}/`)
                     : (path += `${key}.md`),
-            startBlank ? '' : './markdown/'
+            startBlank ? `${appRoot}` : `${appRoot}/markdown/`
         );
 
         //'./markdown/apis/cat/index.md';
@@ -79,7 +81,7 @@ const getMarkDown = async (
 
         return markdown;
     } catch (err) {
-        console.log('Error reading markdown file', keys);
+        //console.log('Error reading markdown file', keys);
         return undefined;
     }
 };

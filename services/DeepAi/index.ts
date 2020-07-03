@@ -1,3 +1,4 @@
+//@ts-ignore
 import deepAi from 'deepai'; // OR include deepai.min.js as a script tag in your HTML
 import { getApi } from '../Config';
 

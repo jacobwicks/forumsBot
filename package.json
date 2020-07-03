@@ -8,11 +8,13 @@
         "controlPanel": "npm start --prefix controlPanel",
         "fullInstall": "npm install && git submodule init && git submodule update && cd controlPanel && npm install",
         "fullSetup": "npm run fullInstall && npm run setup && npm run bot",
+        "fullUpdate": "git pull && git submodule foreach git pull origin master",
         "setup": "cd setup && ts-node index",
         "test": "echo \"Error: no test specified\" && exit 1",
         "tsc": "tsc",
         "updateControlPanel": "cd controlPanel && git pull origin master",
         "uploadInstructions": "cd instructions && npm run deploy",
+        "setupHostedInstructions": "cd setup && ts-node instructionsSetup",
         "server": "ts-node-dev server.ts"
     },
     "repository": {

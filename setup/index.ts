@@ -10,11 +10,17 @@ const rl = readline.createInterface({
     output: process.stdout,
 });
 
-const askFor = (question: string): Promise<string> =>
-    new Promise((resolve, reject) => {
-        rl.question(`${question} `, resolve);
-    });
+// export const askFor = (question: string): Promise<string> =>
+//     new Promise((resolve, reject) => {
+//         rl.question(`${question} `, resolve);
+//     });
 
+export const askFor = (question: string): Promise<string> =>
+    new Promise((resolve, reject) => {
+        rl.question(`${question} `, (answer) => {
+            resolve(answer.toString().trim());
+        });
+    });
 const appRoot = path.resolve(__dirname, '../');
 
 const checkForExistingConfig = async (): Promise<ConfigJSON | boolean> => {

@@ -120,9 +120,11 @@ export const getAnnotatedThreads = async () => {
             };
         } else {
             const inactiveThread = {
+                active: false,
                 bookmarked: false,
                 limit,
                 name,
+                pages: 0,
                 title: title ? title : '???',
                 threadId,
             };

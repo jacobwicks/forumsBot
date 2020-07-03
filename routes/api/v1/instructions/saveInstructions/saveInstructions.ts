@@ -5,6 +5,7 @@ import {
     saveInstructionsToFile,
     getAlbums,
     getBotName,
+    getInstructionsAndSaveToFile,
 } from '../../../../../services/Config';
 import { getActionsInstructions } from '../../../../../bot/services/actions';
 import getMarkDown from '../../../../../markdown';
@@ -20,36 +21,37 @@ export const thisRoute = async (
     next: NextFunction
 ) => {
     try {
-        const fullAlbums = await getAlbums();
-        const albums = fullAlbums
-            ? Object.keys(fullAlbums)
-                  .filter((album) => fullAlbums[album].status)
-                  .map((album) => ({
-                      album,
-                      description: fullAlbums[album].description,
-                  }))
-            : [];
+        // const fullAlbums = await getAlbums();
+        // const albums = fullAlbums
+        //     ? Object.keys(fullAlbums)
+        //           .filter((album) => fullAlbums[album].status)
+        //           .map((album) => ({
+        //               album,
+        //               description: fullAlbums[album].description,
+        //           }))
+        //     : [];
 
-        const actions = await getActionsInstructions();
+        // const actions = await getActionsInstructions();
 
-        const general = await getMarkDown(['general', 'generalInstructions']);
+        // const general = await getMarkDown(['general', 'generalInstructions']);
 
-        const bot = await getBotUserInfo();
+        // const bot = await getBotUserInfo();
 
-        const botName = await getBotName();
+        // const botName = await getBotName();
 
-        const threads = await getBookmarkedThreads();
+        // const threads = await getBookmarkedThreads();
 
-        const instructions = {
-            albums,
-            actions,
-            bot,
-            botName,
-            general,
-            threads,
-        };
+        // const instructions = {
+        //     albums,
+        //     actions,
+        //     bot,
+        //     botName,
+        //     general,
+        //     threads,
+        // };
 
-        const result = await saveInstructionsToFile(instructions);
+        // const result = await saveInstructionsToFile(instructions);
+        const result = await getInstructionsAndSaveToFile();
 
         result ? res.sendStatus(200) : res.sendStatus(500);
     } catch (error) {

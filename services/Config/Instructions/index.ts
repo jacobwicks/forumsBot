@@ -1,14 +1,25 @@
 import { promises as fs } from 'fs';
 import * as path from 'path';
 import { replacer } from '../../JSONStringifyRegExp';
-const { exec } = require('child_process');
+import { getAlbums } from '../Albums';
+import { getActionsInstructions } from '../../../bot/services/actions';
+import getMarkDown from '../../../markdown';
+import getBotUserInfo from '../../../bot/services/FromSA/GetBotUserInfo';
+import { getBotName } from '../Settings';
+import { getBookmarkedThreads } from '../../../bot';
+//const { exec } = require('child_process');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 
-// const {exec} = require('child_process');
-
-// series([
-//  exec('npm run dev'),
-//  exec('npm run test')
-// ]);
+const execCommand = async (command: string) => {
+    try {
+        const { stdout, stderr } = await exec(command);
+        console.log('stdout:', stdout);
+        console.log('stderr:', stderr);
+    } catch (e) {
+        console.error(e); // should contain code (exit code) and signal (that caused the termination).
+    }
+};
 
 const appRoot = path.resolve(__dirname, '../../../');
 
@@ -18,25 +29,44 @@ export const saveInstructionsToFile = async (instructions: any) => {
     try {
         const instructionsString = JSON.stringify(instructions, replacer, 2);
         await fs.writeFile(instructionsPath, instructionsString, 'utf8');
-        console.log('going execute script');
-        exec(
-            'npm run uploadInstructions',
-            (error: any, stdout: any, stderr: any) => {
-                if (error) {
-                    console.log(`error: ${error.message}`);
-                    return;
-                }
-                if (stderr) {
-                    console.log(`stderr: ${stderr}`);
-                    return;
-                }
-                console.log(`stdout: ${stdout}`);
-            }
-        );
-
+        console.log('executing npm run uploadInstructions script');
+        await execCommand(' npm run uploadInstructions');
         return true;
     } catch (err) {
         console.log(err);
         return false;
     }
+};
+
+export const getInstructionsAndSaveToFile = async () => {
+    const fullAlbums = await getAlbums();
+    const albums = fullAlbums
+        ? Object.keys(fullAlbums)
+              .filter((album) => fullAlbums[album].status)
+              .map((album) => ({
+                  album,
+                  description: fullAlbums[album].description,
+              }))
+        : [];
+
+    const actions = await getActionsInstructions();
+
+    const general = await getMarkDown(['general', 'generalInstructions']);
+
+    const bot = await getBotUserInfo();
+
+    const botName = await getBotName();
+
+    const threads = await getBookmarkedThreads();
+
+    const instructions = {
+        albums,
+        actions,
+        bot,
+        botName,
+        general,
+        threads,
+    };
+
+    return await saveInstructionsToFile(instructions);
 };

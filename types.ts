@@ -210,6 +210,7 @@ export interface RespondToPostProps {
 
 //a thread that the bot monitors
 export interface Thread {
+    active: boolean;
     //active is true if it was bookmarked
     //the last time we got bookmarked threads from the forums page
     bookmarked: boolean;

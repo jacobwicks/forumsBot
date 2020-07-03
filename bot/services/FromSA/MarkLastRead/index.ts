@@ -14,6 +14,7 @@ const markLastRead = async ({
 
     const cookie = await getCookieString();
     const response = await fetch(url, {
+        //@ts-ignore
         headers: {
             accept:
                 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',

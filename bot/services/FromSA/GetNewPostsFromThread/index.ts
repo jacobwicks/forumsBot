@@ -6,43 +6,7 @@ import getPostsFromPageNumber from '../GetPostsFromPageNumber';
 import getSearchablePage from '../GetSearchablePage';
 import { getCookieString } from '../../../../services/Config';
 import { threadLastRead } from '../../Urls';
-
-export interface SAUser {
-    avatar?: string;
-    id: number;
-    name: string;
-    title?: string;
-    profile: string;
-    regDate: string;
-}
-
-export interface Post {
-    //the name of the user that wrote the post
-    author: SAUser;
-
-    //the body of the post, without other quoted posts inside it
-    body: string;
-
-    //the date the post was made
-    date: Date;
-
-    //the unique postId number
-    id: number;
-
-    //the img.src property
-    image?: string;
-
-    //a link to the post
-    link: string;
-}
-
-//limits on where to scan in a thread
-export interface ThreadLimits {
-    startPage: number;
-    startPost?: number;
-    stopPage?: number;
-    stopPost?: number;
-}
+import { Post, ThreadLimits } from '../../../../types';
 
 //gets the number of the last page in the thread
 const getLastPageNumber = async ($: any) => {
