@@ -50,7 +50,8 @@ const getActionFileNames = () => {
         cwd: `${__dirname}`,
 
         //ignore test files
-        ignore: '**/*.test.ts',
+        //ignore this index file
+        ignore: ['**/*.test.ts', 'index.ts'],
 
         //need to use the synchronous version to get a return value
         sync: true,
