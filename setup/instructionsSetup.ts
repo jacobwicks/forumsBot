@@ -2,6 +2,7 @@ import { askFor } from '.';
 import { promises as fs } from 'fs';
 import * as path from 'path';
 import { getInstructionsAndSaveToFile } from '../services/Config';
+import { updateActionsInConfig } from '../bot';
 //const { exec } = require('child_process');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -74,6 +75,8 @@ What is the git repo name? `);
     );
 
     await fs.writeFile(packagePath, instructionPackageString, 'utf8');
+
+    await updateActionsInConfig();
 
     //this will execute the script that uploads to github
     await getInstructionsAndSaveToFile();
