@@ -27,7 +27,8 @@
         },
         "interval": 5,
         "on": false,
-        "running": false
+        "running": false,
+        "showBotSignature": false
     },
     "threads": {}
 }

@@ -32,4 +32,8 @@ const checkBotStart = async () => {
     }
 };
 
-checkBotStart();
+const startup = async () => {
+    await checkBotStart();
+};
+
+startup();

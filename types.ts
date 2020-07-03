@@ -66,13 +66,15 @@ interface ConfigJSON {
 
     settings: ApiBotSettings;
 
+    showBotSignature: boolean;
+
     //user annotation of threads monitored by bot
     threads: {
         [key: string]: Thread;
     };
 
     //fix this later- for indexing in FromConfig procedure
-    [key: string]: object | string | undefined;
+    [key: string]: boolean | object | string | undefined;
 }
 
 interface Creds {

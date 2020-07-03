@@ -91,7 +91,7 @@ export const writeToConfig = async ({
         }
 
     //no config returned, can't write to it
-    return false;
+    return Promise.resolve(false);
 };
 
 //use this to change an existing key in the config.json file
