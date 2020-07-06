@@ -36,6 +36,10 @@ interface ApiBotSettings {
     //If the bot is set to run every interval or not
     on: boolean;
 
+    //post a link to the bot instructions hosted on github pages
+    //every time the bot posts
+    postLinkToInstructions: boolean;
+
     //if the bot is currently running or not
     running: boolean;
 }
@@ -65,8 +69,6 @@ interface ConfigJSON {
     };
 
     settings: ApiBotSettings;
-
-    showBotSignature: boolean;
 
     //user annotation of threads monitored by bot
     threads: {

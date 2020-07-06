@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { getActionsInstructions } from '../../../../../bot/services/actions';
-import { getAlbums } from '../../../../../services/Config';
+import {
+    getAlbums,
+    getInstructionsHomepage,
+} from '../../../../../services/Config';
 import getMarkDown from '../../../../../markdown';
 import getBotUserInfo from '../../../../../bot/services/FromSA/GetBotUserInfo';
 import { getBookmarkedThreads } from '../../../../../bot';
@@ -30,13 +33,15 @@ export const thisRoute = async (
 
         const actions = await getActionsInstructions(true);
 
+        const bot = await getBotUserInfo();
+
         const general = await getMarkDown(['general', 'generalInstructions']);
 
-        const bot = await getBotUserInfo();
+        const homepage = await getInstructionsHomepage();
 
         const threads = await getBookmarkedThreads();
 
-        res.send({ albums, actions, bot, general, threads });
+        res.send({ albums, actions, bot, general, homepage, threads });
     } catch (error) {
         res.status(500);
         next(error);

@@ -70,3 +70,18 @@ export const getInstructionsAndSaveToFile = async () => {
 
     return await saveInstructionsToFile(instructions);
 };
+
+export const getInstructionsHomepage = async (): Promise<
+    string | undefined
+> => {
+    try {
+        const fileString = await fs.readFile(
+            `${appRoot}/instructions/package.json`,
+            'utf8'
+        );
+        const parsed = JSON.parse(fileString);
+        return parsed?.homepage;
+    } catch (err) {
+        return undefined;
+    }
+};

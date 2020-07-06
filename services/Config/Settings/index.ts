@@ -41,6 +41,11 @@ export const getInterval = async () => {
     return settings?.interval;
 };
 
+export const getPostLinkToInstructions = async () => {
+    const settings = await getSettings();
+    return settings?.postLinkToInstructions;
+};
+
 export const getOn = async () => {
     const settings = await getSettings();
     return settings?.on;
@@ -72,6 +77,11 @@ export const setCredsUserId = async (value: number) => {
 export const setOn = async (on: boolean) => {
     const configKeys = [...settingsConfigKeys, 'on'];
     return await writeToConfig({ configKeys, value: on });
+};
+
+export const setPostLinkToInstructions = async (value: boolean) => {
+    const configKeys = [...settingsConfigKeys, 'postLinkToInstructions'];
+    return await writeToConfig({ configKeys, value });
 };
 
 export const getRunning = async () => {
