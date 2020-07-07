@@ -1,6 +1,6 @@
-[submodule "instructions"]
-	path = instructions
-	url = https://github.com/jacobwicks/forumsBotInstructions.git
 [submodule "controlPanel"]
 	path = controlPanel
 	url = https://github.com/jacobwicks/forumsBotControlPanel.git
+[submodule "instructions"]
+	path = instructions
+	url = https://github.com/jacobwicks/forumsBotInstructions.git
