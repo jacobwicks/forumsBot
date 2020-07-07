@@ -56,8 +56,6 @@ export const bot = async (threadId?: number) => {
 
         const onProbation = await checkProbation();
 
-        console.log('on probation is ', onProbation);
-
         if (onProbation) {
             console.log('Bot is on probation, ending run');
             sendLogEvent('Bot is on probation, ending run.');

@@ -265,6 +265,7 @@ const getHandleInstructions = async () => {
         instructions: Instruction[];
         threadId: number;
     }) {
+        let hadValid = false;
         //async await works best with for... of loops vs .forEach
         for await (const [index, post] of instructions.entries()) {
             let validInstruction = true;
@@ -315,6 +316,8 @@ const getHandleInstructions = async () => {
                 }
             }
 
+            if (validInstruction) hadValid = true;
+
             //if there are multiple instructions, wait between each one
             if (instructions.length > 1) {
                 if (validInstruction && !noWait) {
@@ -330,7 +333,7 @@ const getHandleInstructions = async () => {
                         setTimeout(() => {
                             console.log('10 seconds for limiter elapsed');
                             resolve();
-                        }, 11000)
+                        }, 10000)
                     );
                 } else {
                     console.log(
@@ -350,6 +353,7 @@ const getHandleInstructions = async () => {
                 }
             }
         }
+        return hadValid;
     };
 };
 

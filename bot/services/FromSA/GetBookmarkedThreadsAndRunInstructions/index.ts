@@ -32,6 +32,10 @@ const getBookmarkedThreadsAndRunInstructions = async () => {
     //this gets all the unread posts from the SA forums
     const threadsAndPosts = await getNewPostsFromThreads(bookmarkedThreads);
 
+    //should wait indicates that the last loop through made a post
+    //and we need to wait for the forums cooldown timer
+    let shouldWait = false;
+
     //process all posts in each thread
     //if it's an instruction for the bot, run it
     //use a for loop, await in forEach doesn't work as expected
@@ -52,7 +56,7 @@ const getBookmarkedThreadsAndRunInstructions = async () => {
         const title = thisThread?.name ? thisThread.name : currentTitle;
 
         //handle each post in the array
-        await getInstructionsAndRunInstructions({
+        const madePost: boolean = await getInstructionsAndRunInstructions({
             //don't post on live forums
             simulate: false,
 
@@ -64,7 +68,11 @@ const getBookmarkedThreadsAndRunInstructions = async () => {
 
             //the id of this thread
             threadId,
+
+            waitFirst: shouldWait,
         });
+
+        shouldWait = madePost;
     }
     sendLogEvent('bot has gotten posts and handled the posts');
 };

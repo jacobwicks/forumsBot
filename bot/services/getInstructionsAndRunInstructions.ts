@@ -17,11 +17,13 @@ const getInstructionsAndRunInstructions = async ({
     title,
     posts,
     threadId,
+    waitFirst,
 }: {
     simulate: boolean;
     title?: string;
     posts: Post[];
     threadId: number;
+    waitFirst: boolean;
 }) => {
     const instructions = await getInstructionsFromPosts(posts);
 
@@ -38,9 +40,21 @@ const getInstructionsAndRunInstructions = async ({
         instructions: getLogInstructions(instructions),
     });
 
-    const handleInstructions = await getHandleInstructions;
+    if (instructions.length) {
+        const handleInstructions = await getHandleInstructions;
 
-    await handleInstructions({ instructions, threadId });
+        if (waitFirst) {
+            await new Promise((resolve) =>
+                setTimeout(() => {
+                    console.log('10 seconds for limiter elapsed');
+                    resolve();
+                }, 10000)
+            );
+        }
+
+        //handleInstructions returns true if it executed at least one valid instruction
+        return await handleInstructions({ instructions, threadId });
+    } else return waitFirst;
 };
 
 export default getInstructionsAndRunInstructions;
