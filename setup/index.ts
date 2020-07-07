@@ -140,6 +140,12 @@ What botName will the bot use?`;
 
     console.log(`Config file created at ${configPath}`);
 
+    const imageQueuePath = `${appRoot}/imageQueue.json`;
+
+    await fs.writeFile(imageQueuePath, '[]', 'utf8');
+
+    console.log(`Image Queue file created at ${imageQueuePath}`);
+
     process.exit(0);
 };
 

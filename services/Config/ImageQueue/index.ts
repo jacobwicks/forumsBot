@@ -16,7 +16,7 @@ export const getImageQueue = async (): Promise<ReviewImage[] | undefined> => {
         console.log('couldnt get imageQueue');
         console.log(err);
         //process.exit(0);
-        return undefined;
+        return [];
     }
 };
 // export const getImageQueue = async () => {
