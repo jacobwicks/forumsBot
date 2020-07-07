@@ -1,5 +1,6 @@
-import { createCanvas, loadImage } from 'canvas';
+import { createCanvas } from 'canvas';
 import { sendLogEvent } from '../../../../services/Events';
+import loadImage from '../../FromSA/AttachmentSafeLoadImage';
 
 export const zoom = async (imageUrl: string) => {
     try {

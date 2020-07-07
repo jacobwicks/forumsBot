@@ -1,4 +1,5 @@
-import { createCanvas, loadImage } from 'canvas';
+import { createCanvas } from 'canvas';
+import loadImage from '../../FromSA/AttachmentSafeLoadImage';
 
 //returns 1.3 - ~ 2.3
 const getWiderBy = () => 1.3 + Number(Math.random().toFixed(2));

@@ -1,4 +1,5 @@
-import { createCanvas, loadImage } from 'canvas';
+import { createCanvas } from 'canvas';
+import loadImage from '../../FromSA/AttachmentSafeLoadImage';
 
 //returns number between 100 and 255
 const getRedderBy = () => Math.floor(Math.random() * (255 - 100 + 1) + 100);

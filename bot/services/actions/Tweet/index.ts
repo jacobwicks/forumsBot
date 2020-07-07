@@ -30,7 +30,7 @@ const postTweet = async ({
         : sendLogEvent({ error: `Couldn't post tweet from ${twitterAccount}` });
 };
 
-const ignoreList = ['mitchelvii'];
+const ignoreList = ['mitchelvii', 'cum_financial'];
 
 const processInstruction = async ({
     postId,
@@ -42,7 +42,7 @@ const processInstruction = async ({
     instruction: string;
 }) => {
     const arr = instruction.split('@');
-    const twitterAccount = arr[1];
+    const twitterAccount = arr[1].trim();
 
     const isIgnored = ignoreList.some(
         (ignoredAccount) =>
@@ -50,6 +50,9 @@ const processInstruction = async ({
     );
 
     if (isIgnored) {
+        sendLogEvent({
+            error: `User requested tweet from ignored account ${twitterAccount}`,
+        });
         return;
     } else await postTweet({ postId, threadId, twitterAccount });
 };

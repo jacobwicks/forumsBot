@@ -6,6 +6,8 @@ export const bookmarkPage = `${baseUrl}/bookmarkthreads.php`;
 
 export const controlPanel = `${baseUrl}/usercp.php`;
 
+export const forumsAttachment = `${baseUrl}/attachment.php?`;
+
 export const getThreadIdFromUrl = (url: string) => {
     const threadIdParam = '/showthread.php?threadid';
 
