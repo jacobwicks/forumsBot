@@ -91,11 +91,8 @@ const getCookies = async ({
 
         return asObject ? cookieObject : convertObjectToString(cookieObject);
     } else {
-        console.log('GetCookies received request to get userId');
         const response2 = await fetch(url, { ...options, body });
         const response2Text = await response2.text();
-
-        console.log('response2Text.length', response2Text.length);
 
         const response2Cookies = getCookiesFromResponse(response2) as KeyString;
         const cookieObject = { ...responseCookies, ...response2Cookies };

@@ -28,7 +28,10 @@
         "interval": 5,
         "on": false,
         "postLinkToInstructions": false,
-        "running": false
+        "running": false,
+        "sigLinkInstructions": false,
+        "sigShowText": false,
+        "sigText": ""
     },
     "threads": {}
 }

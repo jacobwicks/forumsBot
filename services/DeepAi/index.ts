@@ -43,7 +43,7 @@ const getThoughts = async (text: string) => {
             .slice(1)
             .filter((v) => v)
             .slice(0, 3)
-            .reduce((acc, cur) => (acc += cur), '');
+            .reduce((acc, cur) => `${acc} ${cur}`, '');
 
         const end = nthIndex(toPrint, '.', 3);
 

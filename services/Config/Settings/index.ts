@@ -41,9 +41,19 @@ export const getInterval = async () => {
     return settings?.interval;
 };
 
-export const getPostLinkToInstructions = async () => {
+export const getSigLinkInstructions = async () => {
     const settings = await getSettings();
-    return settings?.postLinkToInstructions;
+    return settings?.sigLinkInstructions;
+};
+
+export const getSigShowText = async () => {
+    const settings = await getSettings();
+    return settings?.sigShowText;
+};
+
+export const getSigText = async () => {
+    const settings = await getSettings();
+    return settings?.sigText;
 };
 
 export const getOn = async () => {

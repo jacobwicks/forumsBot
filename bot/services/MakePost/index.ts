@@ -1,12 +1,18 @@
 import fetch from 'node-fetch';
 import cheerioLoad from '../FromSA/CheerioLoad';
 import getHeaders from '../FromSA/GetHeaders';
-import getSearchablePage from '../FromSA/GetSearchablePage';
-import { getCredsUsername } from '../../../services/Config';
 import { getBody, getJustPosted } from './services/index';
 import getReplyCookies from '../FromSA/GetReplyCookies';
-import { newReply, showPost } from '../Urls';
+import { newReply } from '../Urls';
 import { sendLogEvent } from '../../../services/Events';
+import logger from '../../../configs/Winston';
+import {
+    getSigShowText,
+    getSigLinkInstructions,
+    getSigText,
+    getInstructionsHomepage,
+    getBotName,
+} from '../../../services/Config';
 
 interface MakePostProps1 {
     content: string;
@@ -40,12 +46,30 @@ const makePost = async ({ content, threadId, postId }: MakePostProps) => {
 
     //if we got a postId, we are quoting that post
     //add the quoted post into the postContent string
-    const postContent = postId ? `${quote}${content}` : content;
+    let postContent = postId ? `${quote}${content}` : content;
 
-    const postContentWithInstructions = `${postContent}
-    ________________________________
-    I'm a bot making automated posts!
-    [url=jacobwicks.github.io/forumsBotInstructions/]How to use this bot[/url]`;
+    const sigSeparator = `
+________________________________
+`;
+    const showText = await getSigShowText();
+    const sigText = await getSigText();
+
+    if (showText && sigText) {
+        postContent += sigSeparator;
+        postContent += sigText;
+    }
+
+    const linkInstructions = await getSigLinkInstructions();
+    const instructionsUrl = await getInstructionsHomepage();
+
+    if (linkInstructions && instructionsUrl) {
+        !showText || !sigText
+            ? (postContent += sigSeparator)
+            : (postContent += '\n');
+
+        const botName = await getBotName();
+        postContent += `[url=${instructionsUrl}]How to use ${botName}[/url]`;
+    }
 
     const headers = getHeaders(cookie);
 
@@ -61,7 +85,7 @@ const makePost = async ({ content, threadId, postId }: MakePostProps) => {
     }
 
     const body = getBody({
-        content: postContentWithInstructions,
+        content: postContent,
         form_cookie,
         threadId,
     });
@@ -94,6 +118,8 @@ const makePost = async ({ content, threadId, postId }: MakePostProps) => {
 
     if (posted) {
         const post = await getJustPosted({ cookie, threadId });
+
+        logger.info(post);
 
         sendLogEvent({
             post,

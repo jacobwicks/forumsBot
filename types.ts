@@ -38,7 +38,9 @@ interface ApiBotSettings {
 
     //post a link to the bot instructions hosted on github pages
     //every time the bot posts
-    postLinkToInstructions: boolean;
+    sigLinkInstructions: boolean;
+    sigShowText: boolean;
+    sigText: string;
 
     //if the bot is currently running or not
     running: boolean;

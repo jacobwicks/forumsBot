@@ -19,6 +19,8 @@ export const askFor = (question: string): Promise<string> =>
 
 const appRoot = path.resolve(__dirname, '../');
 
+const blankLine = () => console.log('');
+
 const checkForExistingConfig = async (): Promise<ConfigJSON | boolean> => {
     const configPath = `${appRoot}/config.json`;
     try {
@@ -120,7 +122,11 @@ What botName will the bot use?`;
         The botName may be added in the control panel 'Creds' tab.`);
     }
 
-    const password = await askFor('Enter a password for the control panel');
+    blankLine();
+
+    const password = await askFor(
+        'Enter a password for the local bot control panel'
+    );
 
     const hashedPassword = await hashPromise(password);
 

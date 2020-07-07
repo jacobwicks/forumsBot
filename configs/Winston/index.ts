@@ -54,6 +54,7 @@ const logger = createLogger({
             filename: `${appRoot}/logs/error.log`,
             level: 'error',
         }),
+        new transports.File(options.file),
         //new transports.File({ filename: `${appRoot}/logs/app.log` }),
     ],
     exitOnError: false, // do not exit on handled exceptions
