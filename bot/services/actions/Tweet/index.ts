@@ -44,15 +44,13 @@ const processInstruction = async ({
     const arr = instruction.split('@');
     const twitterAccount = arr[1].trim();
 
-    const isIgnored = ignoreList.some(
-        (ignoredAccount) =>
-            ignoredAccount.toLowerCase() === twitterAccount.toLowerCase()
-    );
+    const isIgnored = ignoreList.includes(twitterAccount.toLowerCase());
 
     if (isIgnored) {
         sendLogEvent({
             error: `User requested tweet from ignored account ${twitterAccount}`,
         });
+        console.log('ignored!', twitterAccount);
         return;
     } else await postTweet({ postId, threadId, twitterAccount });
 };
