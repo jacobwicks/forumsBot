@@ -74,10 +74,17 @@ const getPostContent = ({
     //the postId
     const id = Number($(post).attr('id')?.slice(4));
 
+    //the current url will have threadId#lastpost#postid
+    //#lastpost will mess up the linking cause it overrides postId
+    let currentUrl = $.currentUrl
+        ?.split('#')
+        .filter((el) => el !== 'lastpost')
+        .join('#');
+
     //use the querySelector
     //find the link to post element on each post
     //and, if it exists, return the link href
-    const link = `${$.currentUrl}${$(post)
+    const link = `${currentUrl}${$(post)
         .find('[title="Link to this post"]')
         .attr('href')}`;
 
