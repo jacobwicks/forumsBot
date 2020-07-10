@@ -46,6 +46,7 @@ export const getInstructionsAndSaveToFile = async () => {
               .map((album) => ({
                   album,
                   description: fullAlbums[album].description,
+                  hash: fullAlbums[album]?.hash,
               }))
         : [];
 
