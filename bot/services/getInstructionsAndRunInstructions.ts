@@ -23,7 +23,7 @@ const getInstructionsAndRunInstructions = async ({
     title?: string;
     posts: Post[];
     threadId: number;
-    waitFirst: boolean;
+    waitFirst?: boolean;
 }) => {
     const instructions = await getInstructionsFromPosts(posts);
 
@@ -54,7 +54,7 @@ const getInstructionsAndRunInstructions = async ({
 
         //handleInstructions returns true if it executed at least one valid instruction
         return await handleInstructions({ instructions, threadId });
-    } else return waitFirst;
+    } else return !!waitFirst;
 };
 
 export default getInstructionsAndRunInstructions;
