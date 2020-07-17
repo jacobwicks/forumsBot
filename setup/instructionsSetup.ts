@@ -43,6 +43,7 @@ const setupInstructions = async () => {
     blankLine();
 
     const gitRepoName = await askFor(`Now Setup needs the name of the git repo you just created.
+** THIS IS CASE SENSITIVE ** 
 What is the git repo name? `);
 
     if (!gitRepoName) {
