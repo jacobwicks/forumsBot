@@ -48,7 +48,7 @@
         "concurrently": "^5.2.0",
         "cors": "^2.8.5",
         "deepai": "^1.0.15",
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "fetch-cookie": "^0.9.1",
         "form-data": "^3.0.0",
         "glob": "^7.1.6",
